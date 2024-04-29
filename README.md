@@ -1,6 +1,6 @@
-# {PROJECT_NAME}
+# TaskFlow
 
-Краткое описание проекта
+Веб-приложение для управления проектами и задачами
 
 ## Документация
 
@@ -9,8 +9,8 @@
 ## Installation
 
 ```bash
-git clone git@github.com:enterprise-it-ru/{PROJECT_NAME}.git {PROJECT_NAME}.local
-cd {PROJECT_NAME}.local
+git clone
+cd
 composer install
 ```
 
