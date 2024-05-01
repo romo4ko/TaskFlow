@@ -2,7 +2,7 @@
   <div class="d-block mt-5">
     <div class="col-md-4 mx-auto">
       <div>
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Войдите в систему</h2>
       </div>
       <form class="mt-8 space-y-6" action="#" method="POST" @submit.prevent="authorize">
         <div class="alert alert-danger" v-if="error">{{ error }}</div>

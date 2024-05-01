@@ -7,8 +7,8 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.ts'])
 </head>
 <body class="h-full">
-<div id="app">
-    @yield('content')
-</div>
+    <div id="app">
+        @yield('content')
+    </div>
 </body>
 </html>

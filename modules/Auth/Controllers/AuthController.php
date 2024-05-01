@@ -36,4 +36,9 @@ class AuthController extends Controller
         }
         return ['id' => null];
     }
+
+    public function logout(): void
+    {
+        Auth::logout();
+    }
 }

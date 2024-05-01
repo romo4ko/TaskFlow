@@ -1,16 +1,14 @@
+<script lang="ts">
+
+
+
+</script>
+
 <template>
   <div class="row">
-    <div class="col-md-5 mx-auto">
-      Компонент <b>views/HomePage.vue</b>
+    <div class="col-md-5 mx-auto my-3">
+      <p><b>TaskFlow</b> - приложение для управления проектами и задачами.</p>
+      <a class="btn btn-dark">Проекты</a>
     </div>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  name: "HomePage",
-  data() {
-    return {}
-  },
-}
-</script>
