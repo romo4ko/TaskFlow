@@ -15,4 +15,5 @@ export default defineComponent({
   name: "App",
   components: {HeaderComponent}
 });
+
 </script>

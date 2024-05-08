@@ -3,6 +3,7 @@
 import axios from "axios";
 import {authStore} from "@/stores/authStore";
 import router from "@/router";
+import {ref} from "vue";
 
 function logout() {
   axios.post('/api/logout')
@@ -10,6 +11,8 @@ function logout() {
         location.href = '/';
     })
 }
+
+const active = ref('main');
 
 </script>
 
@@ -24,16 +27,16 @@ function logout() {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Главная</a>
+              <router-link to="/" class="nav-link" :class="active == 'main' ? 'active' : ''" aria-current="page" @click="active = 'main'" href="#">Главная</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Проекты</a>
+              <router-link to="/projects" class="nav-link" :class="active == 'projects' ? 'active' : ''" aria-current="page" @click="active = 'projects'" href="#">Проекты</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Задачи</a>
+              <router-link to="/tasks" class="nav-link" :class="active == 'tasks' ? 'active' : ''" aria-current="page" @click="active = 'tasks'" href="#">Задачи</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Сотрудники</a>
+              <router-link to="/users" class="nav-link" :class="active == 'users' ? 'active' : ''" aria-current="page" @click="active = 'users'" href="#">Сотрудники</router-link>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

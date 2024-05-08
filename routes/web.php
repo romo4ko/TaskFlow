@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Modules\Auth\Controllers\AuthController;
 
@@ -12,7 +13,7 @@ Route::group(['prefix' => 'api'], function () {
 
     // For authorized users
     Route::group(['middleware' => 'auth'], function () {
-        // Роуты для авторизованных
+        Route::resource('projects', ProjectController::class);
     });
 });
 

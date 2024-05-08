@@ -17,6 +17,14 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: () => import('@/views/LoginPage.vue')
   },
+  {
+    name: 'Projects',
+    path: '/projects',
+    meta: {
+      onlyGuests: false,
+    },
+    component: () => import('@/views/Projects/ProjectsList.vue')
+  },
 ];
 
 const router = createRouter({
