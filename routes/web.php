@@ -13,7 +13,10 @@ Route::group(['prefix' => 'api'], function () {
 
     // For authorized users
     Route::group(['middleware' => 'auth'], function () {
+//        Route::get('/projects', [\App\Http\Controllers\ProjectController::class, 'index'])->name('projects');
         Route::resource('projects', ProjectController::class);
+        Route::get('/getProjectForm', [ProjectController::class, 'getFormData']);
+
     });
 });
 

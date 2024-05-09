@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -19,18 +20,24 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Project $projects)
+    public function store(Request $request, Project $projects): \Illuminate\Http\Response | array
     {
-//        $request->all()
-        $projects->append([
-          'name'        => $request->name,
-          'description' => $request->description ?? null,
-          'extended'    => $request->extended ?? null,
-          'status'      => $request->status,
-          'pm'          => $request->pm,
-          'date_start'  => $request->date_start,
-          'date_end'    => $request->date_end ?? null,
-      ]);
+        $request->validate([
+           'name' => 'required',
+           'pm_id' => 'required',
+        ]);
+        $projects->create(
+              $request->only([
+                 'name',
+                 'description',
+                 'extended',
+                 'status',
+                 'pm_id',
+                 'date_start',
+                 'date_end'
+             ])
+        );
+        return ['status' => 0];
     }
 
     /**
@@ -38,16 +45,26 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-//        route()->get()
-//        $project->find()
+        return new ProjectResource($project);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, Project $project): \Illuminate\Http\Response | array
     {
-        $project->update($request->all());
+        $project->update(
+            $request->only([
+                'name',
+                'description',
+                'extended',
+                'status',
+                'pm_id',
+                'date_start',
+                'date_end'
+            ])
+        );
+        return ['status' => 0];
     }
 
     /**
@@ -56,5 +73,13 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
+    }
+
+    public function getFormData(Project $project, User $user)
+    {
+        return [
+            'statuses' => $project::$statuses,
+            'managers' => $user->menegers()
+        ];
     }
 }

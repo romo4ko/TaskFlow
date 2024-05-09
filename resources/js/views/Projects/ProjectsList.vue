@@ -5,10 +5,20 @@ import {ref} from "vue";
 
 const data = ref();
 
-axios.get('/api/projects').then((response) => {
-  console.log(response)
-  data.value = response.data.data
-})
+function fetchData() {
+  axios.get('/api/projects').then((response) => {
+    console.log(response)
+    data.value = response.data.data
+  })
+}
+fetchData()
+
+function destroy(id: number) {
+  axios.delete('/api/projects/'+id).then((response) => {
+    console.log(response)
+    fetchData()
+  })
+}
 
 </script>
 
@@ -19,7 +29,7 @@ axios.get('/api/projects').then((response) => {
       <div class="row">
         <div class="col-lg-12 my-2">
           <div>
-            <a class="btn btn-success" href="">Создать проект</a>
+            <router-link to="/project/create" class="btn btn-success" href="">Создать проект</router-link>
           </div>
         </div>
       </div>
@@ -36,23 +46,24 @@ axios.get('/api/projects').then((response) => {
         <tr v-for="(item, index) in data">
           <td>{{ item.name }}</td>
           <td>{{ item.description }}</td>
-          <td>{{ item.status }}</td>
-          <td>{{ item.pm_id }}</td>
+          <td>{{ item.status.name }}</td>
+          <td>{{ item.pm.name }}</td>
           <td>{{ item.date_start }}</td>
           <td>{{ item.date_end ?? '-' }}</td>
           <td class="d-flex justify-content-around">
             <div>
-              <a class="btn btn-info" href="">Просмотр</a>
+              <router-link class="btn btn-info" :to="'/project/'+item.id">Просмотр</router-link>
             </div>
             <div>
-              <a class="btn btn-primary" href="">Изменить</a>
+              <router-link class="btn btn-primary" :to="'/project/edit/'+item.id">Изменить</router-link>
             </div>
-            <form action="" method="POST">
-              <button type="submit" class="btn btn-danger">Удалить</button>
-            </form>
+            <div>
+              <a class="btn btn-danger" @click="destroy(item.id)">Удалить</a>
+            </div>
           </td>
         </tr>
       </table>
+      <h5 v-else>Список пуст</h5>
     </div>
   </div>
 </template>

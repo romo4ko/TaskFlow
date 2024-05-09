@@ -25,6 +25,30 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: () => import('@/views/Projects/ProjectsList.vue')
   },
+  {
+    name: 'ProjectDetail',
+    path: '/project/:id',
+    meta: {
+      onlyGuests: false,
+    },
+    component: () => import('@/views/Projects/ProjectDetail.vue')
+  },
+  {
+    name: 'CreateProject',
+    path: '/project/create',
+    meta: {
+      onlyGuests: false,
+    },
+    component: () => import('@/views/Projects/ProjectCreate.vue')
+  },
+  {
+    name: 'EditProject',
+    path: '/project/edit/:id',
+    meta: {
+      onlyGuests: false,
+    },
+    component: () => import('@/views/Projects/ProjectEdit.vue')
+  },
 ];
 
 const router = createRouter({
