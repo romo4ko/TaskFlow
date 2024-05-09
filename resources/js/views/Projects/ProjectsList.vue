@@ -37,7 +37,6 @@ function destroy(id: number) {
       <table class="table table-bordered" v-if="data">
         <tr>
           <th>Название</th>
-          <th>Описание</th>
           <th>Статус</th>
           <th>Руководитель</th>
           <th>Дата начала</th>
@@ -45,7 +44,6 @@ function destroy(id: number) {
         </tr>
         <tr v-for="(item, index) in data">
           <td>{{ item.name }}</td>
-          <td>{{ item.description }}</td>
           <td>{{ item.status.name }}</td>
           <td>{{ item.pm.name }}</td>
           <td>{{ item.date_start }}</td>

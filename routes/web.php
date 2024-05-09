@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 use Modules\Auth\Controllers\AuthController;
 
@@ -13,9 +14,12 @@ Route::group(['prefix' => 'api'], function () {
 
     // For authorized users
     Route::group(['middleware' => 'auth'], function () {
-//        Route::get('/projects', [\App\Http\Controllers\ProjectController::class, 'index'])->name('projects');
         Route::resource('projects', ProjectController::class);
         Route::get('/getProjectForm', [ProjectController::class, 'getFormData']);
+
+        Route::resource('tasks', TaskController::class);
+        Route::get('/getTaskForm', [TaskController::class, 'getFormData']);
+
 
     });
 });

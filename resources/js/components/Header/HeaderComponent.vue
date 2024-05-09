@@ -3,7 +3,10 @@
 import axios from "axios";
 import {authStore} from "@/stores/authStore";
 import router from "@/router";
-import {ref} from "vue";
+import {ref, watch} from "vue";
+import {useRoute} from "vue-router";
+
+const route = useRoute();
 
 function logout() {
   axios.post('/api/logout')

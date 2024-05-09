@@ -49,6 +49,38 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: () => import('@/views/Projects/ProjectEdit.vue')
   },
+  {
+    name: 'Tasks',
+    path: '/tasks',
+    meta: {
+      onlyGuests: false,
+    },
+    component: () => import('@/views/Tasks/TasksList.vue')
+  },
+  {
+    name: 'TaskDetail',
+    path: '/task/:id',
+    meta: {
+      onlyGuests: false,
+    },
+    component: () => import('@/views/Tasks/TaskDetail.vue')
+  },
+  {
+    name: 'CreateTasks',
+    path: '/task/create',
+    meta: {
+      onlyGuests: false,
+    },
+    component: () => import('@/views/Tasks/TaskCreate.vue')
+  },
+  {
+    name: 'EditTasks',
+    path: '/task/edit/:id',
+    meta: {
+      onlyGuests: false,
+    },
+    component: () => import('@/views/Tasks/TaskEdit.vue')
+  },
 ];
 
 const router = createRouter({

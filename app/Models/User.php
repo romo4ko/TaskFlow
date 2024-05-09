@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->all();
     }
+
+    public function employees()
+    {
+        return $this->all();
+    }
 }

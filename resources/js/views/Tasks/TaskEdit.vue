@@ -64,8 +64,8 @@ function save() {
 
         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
           <div class="form-group">
-            <strong class="mt-2">Название проекта*:</strong>
-            <input v-model="form.name" type="text" name="type" class="form-control mt-2" placeholder="Название проекта*">
+            <strong class="mt-2">Название проекта:</strong>
+            <input v-model="form.name" type="text" name="type" class="form-control mt-2" placeholder="Название проекта">
           </div>
         </div>
 
@@ -94,8 +94,8 @@ function save() {
           </div>
           <div class="col-6 mb-2">
             <div class="form-group">
-              <strong>Менеджер проекта*:</strong>
-              <select v-if="data" v-model="form.pm_id" class="form-select mt-2" aria-label="">
+              <strong>Менеджер проекта:</strong>
+              <select v-if="data" v-model="form.pm_id" class="form-select mt-2" aria-label="Статус">
                 <option v-for="(item, index) in data.managers" :value="item.id">{{ item.name }}</option>
               </select>
             </div>
