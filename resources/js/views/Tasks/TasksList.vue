@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import axios from "axios";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 
 const data = ref();
 const projects = ref();
@@ -10,14 +10,21 @@ const project = ref();
 function fetchProjects() {
   axios.get('/api/projects').then((response) => {
     projects.value = response.data.data
-    console.log(projects.value)
-
   })
 }
 fetchProjects()
 
+onMounted(() => {
+  let project_id = localStorage.getItem('project') ?? null
+  if (project_id) {
+    project.value = project_id
+    fetchTasks()
+  }
+})
 
 function fetchTasks() {
+  localStorage.setItem('project', project.value);
+
   axios.get('/api/tasks', {
   params: {
     project_id: project.value
@@ -94,6 +101,7 @@ function destroy(id: number) {
           </td>
         </tr>
       </table>
+      <h5 v-else-if="!project">Выберите проект</h5>
       <h5 v-else>Список пуст</h5>
     </div>
   </div>

@@ -19,7 +19,6 @@ const form = ref({
 })
 
 axios.get('/api/projects/' + route.params.id).then((response) => {
-  console.log(response)
   form.value = {
     name: response.data.data.name,
     description: response.data.data.description,
@@ -32,19 +31,19 @@ axios.get('/api/projects/' + route.params.id).then((response) => {
 })
 
 axios.get('/api/getProjectForm').then((response) => {
-  console.log(response)
   data.value = response.data
 })
 
 function save() {
   axios.put(`/api/projects/${ route.params.id }`, form.value).then((response) => {
-    console.log(response)
     if (response.data.status == 0) {
       alert('Изменено');
       router.push('/projects')
     }
+  }).catch((error) => {
+    console.log(Object.keys(error.response.data.errors))
+    alert(error.response.statusText)
   })
-  console.log(form.value)
 }
 
 </script>

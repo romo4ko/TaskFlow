@@ -71,8 +71,8 @@ class DatabaseSeeder extends Seeder
 
         Project::query()->create([
              'name' => 'Проект 1',
-             'description' => 'Описание проекта 1',
-             'extended' => 'Дополнительное описание проекта 1',
+             'description' => fake()->realText,
+             'extended' => fake()->realText,
              'pm_id' => User::query()->first()->id,
              'date_start' => Carbon::now()
         ]);
@@ -80,7 +80,7 @@ class DatabaseSeeder extends Seeder
         foreach (range(0, 5) as $index) {
             Task::query()->create([
                   'name' => 'Задача '.$index,
-                  'description' => 'Описание задачи '.$index,
+                  'description' => fake()->realText,
                   'project_id' => Project::query()->first()->id,
                   'date_start' => Carbon::now(),
             ]);

@@ -5,46 +5,68 @@ import {ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 
 const data = ref();
+const tasks = ref();
 const router = useRouter();
 const route = useRoute();
 
 const form = ref({
   name: null,
   description: null,
-  extended: null,
   status: 0,
-  pm_id: null,
+  type: null,
+  done: 0,
+  project_id: null,
+  parent_id: null,
+  employee_ids: [],
   date_start: null,
   date_end: null
 })
 
-axios.get('/api/projects/' + route.params.id).then((response) => {
-  console.log(response)
-  form.value = {
-    name: response.data.data.name,
-    description: response.data.data.description,
-    extended: response.data.data.extended,
-    status: response.data.data.status.id,
-    pm_id: response.data.data.pm.id,
-    date_start: response.data.data.date_start,
-    date_end: response.data.data.end
-  }
-})
-
-axios.get('/api/getProjectForm').then((response) => {
+axios.get('/api/getTaskForm').then((response) => {
   console.log(response)
   data.value = response.data
 })
 
+axios.get('/api/tasks/' + route.params.id).then((response) => {
+  console.log(response)
+  form.value = {
+    name: response.data.data.name,
+    description: response.data.data.description,
+    status: response.data.data.status.id,
+    type: response.data.data.type ? response.data.data.type.id : null,
+    done: response.data.data.done,
+    project_id: response.data.data.project.id,
+    parent_id: response.data.data.parent ? response.data.data.parent.id : null,
+    employee_ids: response.data.data.employee_ids,
+    date_start: response.data.data.date_start,
+    date_end: response.data.data.end
+  }
+  console.log(form.value)
+}).then(() => {
+  fetchTasks()
+})
+
+function fetchTasks() {
+  axios.get('/api/tasks', {
+    params: {
+      project_id: form.value.project_id
+    }
+  }).then((response) => {
+    tasks.value = response.data.data
+  })
+}
+
 function save() {
-  axios.put(`/api/projects/${ route.params.id }`, form.value).then((response) => {
+  axios.put(`/api/tasks/${ route.params.id }`, form.value).then((response) => {
     console.log(response)
     if (response.data.status == 0) {
       alert('Изменено');
       router.push('/projects')
     }
+  }).catch((error) => {
+    console.log(Object.keys(error.response.data.errors))
+    alert(error.response.statusText)
   })
-  console.log(form.value)
 }
 
 </script>
@@ -57,46 +79,76 @@ function save() {
           <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
         </svg>
       </span>
-      <h1 v-if="data">Создать проект</h1>
+      <h1>Изменить задачу</h1>
     </div>
     <div>
-      <div class="row" v-if="data">
+      <div class="row">
 
         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
           <div class="form-group">
-            <strong class="mt-2">Название проекта:</strong>
-            <input v-model="form.name" type="text" name="type" class="form-control mt-2" placeholder="Название проекта">
+            <strong class="mt-2">Название задачи*:</strong>
+            <input v-model="form.name" type="text" name="type" class="form-control mt-2" placeholder="Название задачи">
           </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
           <div class="form-group">
-            <strong class="mt-2">Описание проекта:</strong>
-            <textarea v-model="form.description" type="text" name="type" class="form-control mt-2" placeholder="Описание проекта"></textarea>
+            <strong class="mt-2">Описание задачи:</strong>
+            <textarea v-model="form.description" type="text" name="type" class="form-control mt-2" placeholder="Описание задачи"></textarea>
           </div>
         </div>
 
-        <div class="col-12 mb-2">
-          <div class="form-group">
-            <strong class="mt-2">Дополнительное описание проекта:</strong>
-            <textarea v-model="form.extended" type="text" name="type" class="form-control mt-2" placeholder="Дополнительное описание проекта"></textarea>
+        <div class="row mb-2">
+          <div class="col-6">
+            <div class="form-group">
+              <strong>Проект*:</strong>
+              <select v-if="data" v-model="form.project_id" @change="fetchTasks()" class="form-select mt-2">
+                <option v-for="(item, index) in data.projects" :value="item.id">{{ item.name }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <strong>Родительская задача:</strong>
+              <select v-if="data" :disabled="form.project_id == null && !tasks" v-model="form.parent_id" class="form-select mt-2">
+                <option v-for="(item, index) in tasks" :value="item.id">{{ item.name }}</option>
+              </select>
+            </div>
           </div>
         </div>
 
         <div class="row mb-2">
           <div class="col-6 mb-2">
             <div class="form-group">
-              <strong>Статус проекта:</strong>
-              <select v-if="data" v-model="form.status" class="form-select mt-2" aria-label="Статус">
+              <strong>Назначена:</strong>
+              <select v-if="data" v-model="form.employee_ids" class="form-select mt-2" multiple aria-label="Multiple select example">
+                <option v-for="(item, index) in data.employees" :value="item.id">{{ item.name }}</option>
+<!--                :selected="form.employee_ids.includes(item.id)"-->
+              </select>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <strong>Выполнена (%):</strong>
+              <input v-model="form.done" type="number" class="form-control mt-2" min="0" max="100" step="10">
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-6 mb-2">
+            <div class="form-group">
+              <strong>Статус задачи:</strong>
+              <select v-if="data" v-model="form.status" class="form-select mt-2">
                 <option v-for="(item, index) in data.statuses" :value="index">{{ item }}</option>
               </select>
             </div>
           </div>
           <div class="col-6 mb-2">
             <div class="form-group">
-              <strong>Менеджер проекта:</strong>
-              <select v-if="data" v-model="form.pm_id" class="form-select mt-2" aria-label="Статус">
-                <option v-for="(item, index) in data.managers" :value="item.id">{{ item.name }}</option>
+              <strong>Тип задачи:</strong>
+              <select v-if="data" v-model="form.type" class="form-select mt-2">
+                <option v-for="(item, index) in data.types" :value="index">{{ item }}</option>
               </select>
             </div>
           </div>
