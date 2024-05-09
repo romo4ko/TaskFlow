@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
@@ -26,17 +27,12 @@ class TaskResource extends JsonResource
             'type'        => $this->getType(),
             'date_start'  => $this->date_start,
             'date_end'    => $this->date_end,
-            'employee_ids' => $this->getEmployees(),
+            'employees' => $this->getEmployees(),
         ];
     }
 
     public function getEmployees()
     {
-        $ids = [];
-        $employee_ids = DB::table('user_task')->where('task_id', $this->id)->get('employee_id');
-        foreach ($employee_ids as $id) {
-            $ids[] = $id->employee_id;
-        }
-        return $ids;
+        return DB::table('user_task')->join('users', 'employee_id', 'users.id')->where('task_id', $this->id)->get();
     }
 }

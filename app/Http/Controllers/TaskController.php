@@ -32,6 +32,7 @@ class TaskController extends Controller
         $request->validate([
                                'name' => 'required',
                                'project_id' => 'required',
+                               'done' => 'integer|min:0|max:100'
                            ]);
         $id = $task->create(
             $request->only([
@@ -73,7 +74,37 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $request->validate([
+               'name' => 'required',
+               'project_id' => 'required',
+                'done' => 'integer|min:0|max:100'
+           ]);
+        $task->update(
+            $request->only([
+               'name',
+               'description',
+               'project_id',
+               'parent_id',
+               'status',
+               'done',
+               'type',
+               'date_start',
+               'date_end'
+            ])
+        );
+
+        $employee_ids = $request->get('employee_ids');
+        if ($employee_ids) {
+            DB::table('user_task')->where('task_id', $task->id)->delete();
+            foreach ($employee_ids as $employee_id) {
+                DB::table('user_task')->insert([
+                   'task_id' => $task->id,
+                   'employee_id' => $employee_id
+                ]);
+            }
+        }
+
+        return ['status' => 0];
     }
 
     /**

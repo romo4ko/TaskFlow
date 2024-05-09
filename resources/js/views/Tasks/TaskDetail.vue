@@ -7,10 +7,13 @@ import {useRoute, useRouter} from "vue-router";
 const data = ref();
 const router = useRouter();
 
-axios.get('/api/tasks/' + useRoute().params.id).then((response) => {
-  console.log(response)
-  data.value = response.data.data
-})
+function fetchTasks() {
+  axios.get('/api/tasks/' + useRoute().params.id).then((response) => {
+    console.log(response)
+    data.value = response.data.data
+  })
+}
+fetchTasks()
 
 </script>
 
@@ -46,6 +49,13 @@ axios.get('/api/tasks/' + useRoute().params.id).then((response) => {
           <h4>Тип задачи</h4>
           <p>{{ data.type ? data.type.name : '-' }}</p>
         </div>
+      </div>
+
+      <div v-if="data.employees.length">
+        <h4>Назначена</h4>
+        <ul>
+          <li v-for="(item, index) in data.employees">{{ item.name }}</li>
+        </ul>
       </div>
 
       <div v-if="data.parent">

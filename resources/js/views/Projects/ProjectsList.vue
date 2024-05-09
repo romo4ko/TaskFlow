@@ -14,10 +14,12 @@ function fetchData() {
 fetchData()
 
 function destroy(id: number) {
-  axios.delete('/api/projects/'+id).then((response) => {
-    console.log(response)
-    fetchData()
-  })
+  if (confirm('Удалить?')) {
+    axios.delete('/api/projects/' + id).then((response) => {
+      console.log(response)
+      fetchData()
+    })
+  }
 }
 
 </script>

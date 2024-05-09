@@ -37,10 +37,12 @@ function fetchTasks() {
 }
 
 function destroy(id: number) {
-  axios.delete('/api/tasks/'+id).then((response) => {
-    console.log(response)
-    fetchTasks()
-  })
+  if (confirm('Удалить?')) {
+    axios.delete('/api/tasks/'+id).then((response) => {
+      console.log(response)
+      fetchTasks()
+    })
+  }
 }
 
 </script>
