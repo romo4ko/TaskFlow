@@ -12,6 +12,7 @@ const auth = authStore();
 const role = ref(auth.userData ? auth.userData.user.grants.slug : null);
 
 function logout() {
+  localStorage.removeItem('project')
   axios.post('/api/logout')
     .then(() => {
         location.href = '/';
@@ -50,16 +51,18 @@ const active = ref('main');
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#" @click.prevent="logout()">Выйти</a></li>
-                <li><a class="dropdown-item" href="#">Изменить</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">О приложении</a></li>
+                <li><router-link to="/" class="dropdown-item" href="#">О приложении</router-link></li>
               </ul>
             </li>
           </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Поиск</button>
-          </form>
+<!--          <form class="d-flex" role="search">-->
+<!--            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+<!--            <button class="btn btn-outline-success" type="submit">Поиск</button>-->
+<!--          </form>-->
+          <div class="d-flex" style="color: white">
+            v1.0
+          </div>
         </div>
       </div>
     </nav>

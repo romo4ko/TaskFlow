@@ -135,13 +135,13 @@ class TaskController extends Controller
         $task->delete();
     }
 
-    public function getFormData(Task $task, User $user)
+    public function getFormData(Task $task, User $user, ProjectController $projectController)
     {
         return [
             'statuses' => $task::$statuses,
             'types' => $task::$types,
             'employees' => $user->employees(),
-            'projects' => Project::all()
+            'projects' => $projectController->index($user)
         ];
     }
 }
