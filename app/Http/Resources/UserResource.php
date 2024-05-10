@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Job;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -21,7 +22,23 @@ class UserResource extends JsonResource
             'email'       => $this->email,
             'phone'       => $this->phone,
             'job'         => $this->job,
-            'created_at'  => Carbon::parse($this->created_at)->format('Y-m-d')
+            'grants'      => $this->getGrants(),
+            'created_at'  => Carbon::parse($this->created_at)->format('Y-m-d'),
+        ];
+    }
+
+    public function getGrants()
+    {
+        $slug = array_search($this->job->grants, Job::$grants);
+        $name = match ($slug) {
+            'administrator' => 'Администратор',
+            'manager' => 'Менеджер',
+            default => 'Пользователь',
+        };
+
+        return [
+            'slug' => $slug,
+            'name' => $name
         ];
     }
 }

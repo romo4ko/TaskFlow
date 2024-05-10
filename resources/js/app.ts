@@ -19,6 +19,16 @@ router.beforeEach((to) => {
     return '/login'
   }
 
+  if (auth.userData) {
+    if (to.meta.forAdmin && auth.userData.user.grants.slug !== 'administrator') {
+      return '/'
+    }
+
+    if (to.meta.forManager && (auth.userData.user.grants.slug !== 'manager' && auth.userData.user.grants.slug !== 'administrator')) {
+      return '/'
+    }
+  }
+
   // Redirect authorized users from guest pages
   if (to.meta.onlyGuests && auth.userData) {
     return '/'

@@ -7,6 +7,9 @@ import {ref, watch} from "vue";
 import {useRoute} from "vue-router";
 
 const route = useRoute();
+const auth = authStore();
+
+const role = ref(auth.userData ? auth.userData.user.grants.slug : null);
 
 function logout() {
   axios.post('/api/logout')
@@ -38,7 +41,7 @@ const active = ref('main');
             <li class="nav-item">
               <router-link to="/tasks" class="nav-link" :class="active == 'tasks' ? 'active' : ''" aria-current="page" @click="active = 'tasks'" href="#">Задачи</router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-if="role == 'administrator'">
               <router-link to="/users" class="nav-link" :class="active == 'users' ? 'active' : ''" aria-current="page" @click="active = 'users'" href="#">Сотрудники</router-link>
             </li>
             <li class="nav-item dropdown">

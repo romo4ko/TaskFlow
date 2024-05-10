@@ -38,6 +38,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/project/create',
     meta: {
       requiresAuth: true,
+      forAdmin: true,
     },
     component: () => import('@/views/Projects/ProjectCreate.vue')
   },
@@ -46,6 +47,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/project/edit/:id',
     meta: {
       requiresAuth: true,
+      forAdmin: true,
     },
     component: () => import('@/views/Projects/ProjectEdit.vue')
   },
@@ -70,6 +72,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/task/create',
     meta: {
       requiresAuth: true,
+      forManager: true
     },
     component: () => import('@/views/Tasks/TaskCreate.vue')
   },
@@ -78,6 +81,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/task/edit/:id',
     meta: {
       requiresAuth: true,
+      forManager: true
     },
     component: () => import('@/views/Tasks/TaskEdit.vue')
   },
@@ -86,6 +90,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/users',
     meta: {
       requiresAuth: true,
+      forAdmin: true,
     },
     component: () => import('@/views/Users/UsersList.vue')
   },
@@ -94,6 +99,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/user/:id',
     meta: {
       requiresAuth: true,
+      forAdmin: true,
     },
     component: () => import('@/views/Users/UserDetail.vue')
   },
@@ -102,6 +108,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/user/create',
     meta: {
       requiresAuth: true,
+      forAdmin: true,
     },
     component: () => import('@/views/Users/UserCreate.vue')
   },
@@ -110,6 +117,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/user/edit/:id',
     meta: {
       requiresAuth: true,
+      forAdmin: true,
     },
     component: () => import('@/views/Users/UserEdit.vue')
   },

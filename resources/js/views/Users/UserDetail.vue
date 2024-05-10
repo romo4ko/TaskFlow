@@ -36,7 +36,7 @@ axios.get('/api/users/' + useRoute().params.id).then((response) => {
         </div>
         <div class="col">
           <h4>Права</h4>
-          <p>{{ data.job.grants }}</p>
+          <p>{{ data.grants.name }}</p>
         </div>
       </div>
       <h4>Дата добавления</h4>

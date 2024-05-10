@@ -2,8 +2,11 @@
 
 import axios from "axios";
 import {ref} from "vue";
+import {authStore} from "@/stores/authStore";
 
 const data = ref();
+const auth = authStore();
+const role = ref(auth.userData ? auth.userData.user.grants.slug : null);
 
 function fetchData() {
   axios.get('/api/projects').then((response) => {
@@ -28,15 +31,15 @@ function destroy(id: number) {
   <div class="container mt-3">
     <h1>Проекты</h1>
     <div>
-      <div class="row">
+      <div class="row" v-if="role == 'administrator'">
         <div class="col-lg-12 my-2">
           <div>
-            <router-link to="/project/create" class="btn btn-success" href="">Создать проект</router-link>
+            <router-link to="/project/create" class="btn btn-success">Создать проект</router-link>
           </div>
         </div>
       </div>
 
-      <table class="table table-bordered" v-if="data">
+      <table class="table table-bordered" v-if="data && data.length">
         <tr>
           <th>Название</th>
           <th>Статус</th>
@@ -54,10 +57,10 @@ function destroy(id: number) {
             <div>
               <router-link class="btn btn-info" :to="'/project/'+item.id">Просмотр</router-link>
             </div>
-            <div>
+            <div v-if="role == 'administrator'">
               <router-link class="btn btn-primary" :to="'/project/edit/'+item.id">Изменить</router-link>
             </div>
-            <div>
+            <div v-if="role == 'administrator'">
               <a class="btn btn-danger" @click="destroy(item.id)">Удалить</a>
             </div>
           </td>

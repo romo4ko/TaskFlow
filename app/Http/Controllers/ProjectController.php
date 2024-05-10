@@ -3,18 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ProjectResource;
+use App\Http\Resources\UserResource;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Modules\Auth\Controllers\AuthController;
 
 class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(User $user)
     {
-        return ProjectResource::collection(Project::all());
+        $auth = $user->auth();
+        if ($auth['role'] == 'administrator') {
+            $projects = Project::all();
+        }
+        elseif ($auth['role'] == 'manager') {
+            $projects = Project::where('pm_id', $auth['user']->id)->get();
+        }
+        else {
+            // Проекты, с задачами, за которыми закреплён сотрудник
+            $projects = Project::query()
+                ->join('tasks', 'tasks.project_id', 'projects.id')
+                ->join('user_task', 'user_task.task_id', 'tasks.id')
+                ->select('projects.*')
+                ->where('user_task.employee_id', $auth['user']->id)
+                ->distinct()
+                ->get();
+        }
+
+        return ProjectResource::collection($projects);
     }
 
     /**

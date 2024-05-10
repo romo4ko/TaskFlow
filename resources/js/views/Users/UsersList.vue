@@ -36,7 +36,7 @@ function destroy(id: number) {
         </div>
       </div>
 
-      <table class="table table-bordered" v-if="data">
+      <table class="table table-bordered" v-if="data && data.length">
         <tr>
           <th>ФИО</th>
           <th>Email</th>

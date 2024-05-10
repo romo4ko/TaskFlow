@@ -14,13 +14,33 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request, User $user)
     {
+        $auth = $user->auth();
         $project_id = $request->get('project_id');
+
         if ($project_id) {
-            $tasks = Task::where('project_id', $project_id)->get();
+
+            if ($auth['role'] == 'administrator') {
+                $tasks = Task::where('project_id', $project_id)->get();
+            }
+            elseif ($auth['role'] == 'manager') {
+                $tasks = Task::where('project_id', $project_id)->get();
+            }
+            else {
+                // Проекты, с задачами, за которыми закреплён сотрудник
+                $tasks = Task::query()
+                    ->join('user_task', 'user_task.task_id', 'tasks.id')
+                    ->select('tasks.*')
+                    ->where('user_task.employee_id', $auth['user']->id)
+                    ->where('project_id', $project_id)
+                    ->distinct()
+                    ->get();
+            }
+
             return TaskResource::collection($tasks);
         }
+
         return null;
     }
 
