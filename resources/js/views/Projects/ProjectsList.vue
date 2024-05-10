@@ -39,32 +39,36 @@ function destroy(id: number) {
         </div>
       </div>
 
-      <table class="table table-bordered" v-if="data && data.length">
-        <tr>
-          <th>Название</th>
-          <th>Статус</th>
-          <th>Руководитель</th>
-          <th>Дата начала</th>
-          <th>Дата окончания</th>
-        </tr>
-        <tr v-for="(item, index) in data">
-          <td>{{ item.name }}</td>
-          <td>{{ item.status.name }}</td>
-          <td>{{ item.pm.name }}</td>
-          <td>{{ item.date_start }}</td>
-          <td>{{ item.date_end ?? '-' }}</td>
-          <td class="d-flex justify-content-around">
-            <div>
-              <router-link class="btn btn-info" :to="'/project/'+item.id">Просмотр</router-link>
-            </div>
-            <div v-if="role == 'administrator'">
-              <router-link class="btn btn-primary" :to="'/project/edit/'+item.id">Изменить</router-link>
-            </div>
-            <div v-if="role == 'administrator'">
-              <a class="btn btn-danger" @click="destroy(item.id)">Удалить</a>
-            </div>
-          </td>
-        </tr>
+      <table class="table table-bordered table-hover" v-if="data && data.length">
+        <thead>
+          <tr>
+            <th>Название</th>
+            <th>Статус</th>
+            <th>Руководитель</th>
+            <th>Дата начала</th>
+            <th>Дата окончания</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in data">
+            <td>{{ item.name }}</td>
+            <td>{{ item.status.name }}</td>
+            <td>{{ item.pm.name }}</td>
+            <td>{{ item.date_start }}</td>
+            <td>{{ item.date_end ?? '-' }}</td>
+            <td class="d-flex justify-content-around">
+              <div>
+                <router-link class="btn btn-info" :to="'/project/'+item.id">Просмотр</router-link>
+              </div>
+              <div v-if="role == 'administrator'">
+                <router-link class="btn btn-primary" :to="'/project/edit/'+item.id">Изменить</router-link>
+              </div>
+              <div v-if="role == 'administrator'">
+                <a class="btn btn-danger" @click="destroy(item.id)">Удалить</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
       </table>
       <h5 v-else>Список пуст</h5>
     </div>

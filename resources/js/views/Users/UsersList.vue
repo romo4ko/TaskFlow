@@ -36,30 +36,34 @@ function destroy(id: number) {
         </div>
       </div>
 
-      <table class="table table-bordered" v-if="data && data.length">
-        <tr>
-          <th>ФИО</th>
-          <th>Email</th>
-          <th>Телефон</th>
-          <th>Должность</th>
-        </tr>
-        <tr v-for="(item, index) in data">
-          <td>{{ item.name }}</td>
-          <td>{{ item.email }}</td>
-          <td>{{ item.phone ?? '-' }}</td>
-          <td>{{ item.job ? item.job.name : '-' }}</td>
-          <td class="d-flex justify-content-around">
-            <div>
-              <router-link class="btn btn-info" :to="'/user/'+item.id">Просмотр</router-link>
-            </div>
-            <div>
-              <router-link class="btn btn-primary" :to="'/user/edit/'+item.id">Изменить</router-link>
-            </div>
-            <div>
-              <a class="btn btn-danger" @click="destroy(item.id)">Удалить</a>
-            </div>
-          </td>
-        </tr>
+      <table class="table table-bordered table-hover" v-if="data && data.length">
+        <thead>
+          <tr>
+            <th>ФИО</th>
+            <th>Email</th>
+            <th>Телефон</th>
+            <th>Должность</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in data">
+            <td>{{ item.name }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.phone ?? '-' }}</td>
+            <td>{{ item.job ? item.job.name : '-' }}</td>
+            <td class="d-flex justify-content-around">
+              <div>
+                <router-link class="btn btn-info" :to="'/user/'+item.id">Просмотр</router-link>
+              </div>
+              <div>
+                <router-link class="btn btn-primary" :to="'/user/edit/'+item.id">Изменить</router-link>
+              </div>
+              <div>
+                <a class="btn btn-danger" @click="destroy(item.id)">Удалить</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
       </table>
       <h5 v-else>Список пуст</h5>
     </div>

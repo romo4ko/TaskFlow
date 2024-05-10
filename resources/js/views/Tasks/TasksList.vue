@@ -76,36 +76,40 @@ function destroy(id: number) {
         </div>
       </div>
 
-      <table class="table table-bordered" v-if="data && data.length">
-        <tr>
-          <th>#</th>
-          <th>Название</th>
-          <th>Статус</th>
-          <th>Тип</th>
-          <th>Выполнено</th>
-          <th>Дата начала</th>
-          <th>Дата окончания</th>
-        </tr>
-        <tr v-for="(item, index) in data">
-          <td>{{ item.id }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.status.name }}</td>
-          <td>{{ item.type ? item.type.name : '-' }}</td>
-          <td>{{ item.done }}%</td>
-          <td>{{ item.date_start }}</td>
-          <td>{{ item.date_end ?? '-' }}</td>
-          <td class="d-flex justify-content-around">
-            <div>
-              <router-link class="btn btn-info" :to="'/task/'+item.id">Просмотр</router-link>
-            </div>
-            <div v-if="role == 'administrator' || role == 'manager'">
-              <router-link class="btn btn-primary" :to="'/task/edit/'+item.id">Изменить</router-link>
-            </div>
-            <div v-if="role == 'administrator' || role == 'manager'">
-              <a class="btn btn-danger" @click="destroy(item.id)">Удалить</a>
-            </div>
-          </td>
-        </tr>
+      <table class="table table-bordered table-hover" v-if="data && data.length">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Название</th>
+            <th>Статус</th>
+            <th>Тип</th>
+            <th>Выполнено</th>
+            <th>Дата начала</th>
+            <th>Дата окончания</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in data">
+            <td>{{ item.id }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.status.name }}</td>
+            <td>{{ item.type ? item.type.name : '-' }}</td>
+            <td>{{ item.done }}%</td>
+            <td>{{ item.date_start }}</td>
+            <td>{{ item.date_end ?? '-' }}</td>
+            <td class="d-flex justify-content-around">
+              <div>
+                <router-link class="btn btn-info" :to="'/task/'+item.id">Просмотр</router-link>
+              </div>
+              <div v-if="role == 'administrator' || role == 'manager'">
+                <router-link class="btn btn-primary" :to="'/task/edit/'+item.id">Изменить</router-link>
+              </div>
+              <div v-if="role == 'administrator' || role == 'manager'">
+                <a class="btn btn-danger" @click="destroy(item.id)">Удалить</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
       </table>
       <h5 v-else-if="!project">Выберите проект</h5>
       <h5 v-else>Список пуст</h5>
