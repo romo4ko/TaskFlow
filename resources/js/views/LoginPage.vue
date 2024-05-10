@@ -9,7 +9,7 @@
 
         <div class="rounded-md shadow-sm -space-y-px">
           <div class="mb-4">
-            <label for="email-address" class="sr-only">Email address</label>
+            <label for="email-address" class="sr-only">Email:</label>
             <input
               id="email-address"
               name="email"
@@ -22,7 +22,7 @@
             >
           </div>
           <div>
-            <label for="password" class="sr-only">Password</label>
+            <label for="password" class="sr-only">Пароль</label>
             <input
               id="password"
               name="password"
@@ -38,11 +38,11 @@
 
         <div class="form-check mb-2 mt-2">
           <input id="remember-me" name="remember-me" type="checkbox" class="form-check-input" v-model="form.remember">
-          <label for="remember-me" class="form-check-label">Remember me</label>
+          <label for="remember-me" class="form-check-label">Запомнить меня</label>
         </div>
 
         <button type="submit" class="btn btn-primary w-full" :disabled="loading">
-          Sign in
+          Войти
         </button>
       </form>
     </div>

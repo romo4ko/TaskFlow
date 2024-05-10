@@ -21,7 +21,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Projects',
     path: '/projects',
     meta: {
-      onlyGuests: false,
+      requiresAuth: true,
     },
     component: () => import('@/views/Projects/ProjectsList.vue')
   },
@@ -29,7 +29,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'ProjectDetail',
     path: '/project/:id',
     meta: {
-      onlyGuests: false,
+      requiresAuth: true,
     },
     component: () => import('@/views/Projects/ProjectDetail.vue')
   },
@@ -37,7 +37,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'CreateProject',
     path: '/project/create',
     meta: {
-      onlyGuests: false,
+      requiresAuth: true,
     },
     component: () => import('@/views/Projects/ProjectCreate.vue')
   },
@@ -45,7 +45,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'EditProject',
     path: '/project/edit/:id',
     meta: {
-      onlyGuests: false,
+      requiresAuth: true,
     },
     component: () => import('@/views/Projects/ProjectEdit.vue')
   },
@@ -53,7 +53,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Tasks',
     path: '/tasks',
     meta: {
-      onlyGuests: false,
+      requiresAuth: true,
     },
     component: () => import('@/views/Tasks/TasksList.vue')
   },
@@ -61,7 +61,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'TaskDetail',
     path: '/task/:id',
     meta: {
-      onlyGuests: false,
+      requiresAuth: true,
     },
     component: () => import('@/views/Tasks/TaskDetail.vue')
   },
@@ -69,7 +69,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'CreateTasks',
     path: '/task/create',
     meta: {
-      onlyGuests: false,
+      requiresAuth: true,
     },
     component: () => import('@/views/Tasks/TaskCreate.vue')
   },
@@ -77,9 +77,41 @@ const routes: Array<RouteRecordRaw> = [
     name: 'EditTasks',
     path: '/task/edit/:id',
     meta: {
-      onlyGuests: false,
+      requiresAuth: true,
     },
     component: () => import('@/views/Tasks/TaskEdit.vue')
+  },
+  {
+    name: 'Users',
+    path: '/users',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('@/views/Users/UsersList.vue')
+  },
+  {
+    name: 'UserDetail',
+    path: '/user/:id',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('@/views/Users/UserDetail.vue')
+  },
+  {
+    name: 'CreateUsers',
+    path: '/user/create',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('@/views/Users/UserCreate.vue')
+  },
+  {
+    name: 'EditUsers',
+    path: '/user/edit/:id',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('@/views/Users/UserEdit.vue')
   },
 ];
 

@@ -24,6 +24,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
+        'job_id',
         'password',
     ];
 
@@ -54,5 +56,10 @@ class User extends Authenticatable
     public function employees()
     {
         return $this->all();
+    }
+
+    public function job()
+    {
+        return $this->belongsTo(Job::class);
     }
 }

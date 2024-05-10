@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Modules\Auth\Controllers\AuthController;
 
@@ -20,7 +21,8 @@ Route::group(['prefix' => 'api'], function () {
         Route::resource('tasks', TaskController::class);
         Route::get('/getTaskForm', [TaskController::class, 'getFormData']);
 
-
+        Route::resource('users', UserController::class);
+        Route::get('/getUserForm', [UserController::class, 'getFormData']);
     });
 });
 
