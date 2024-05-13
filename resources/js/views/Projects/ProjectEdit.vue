@@ -26,7 +26,7 @@ axios.get('/api/projects/' + route.params.id).then((response) => {
     status: response.data.data.status.id,
     pm_id: response.data.data.pm.id,
     date_start: response.data.data.date_start,
-    date_end: response.data.data.end
+    date_end: response.data.data.date_end
   }
 })
 

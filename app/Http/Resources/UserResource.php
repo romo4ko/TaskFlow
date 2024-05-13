@@ -31,7 +31,7 @@ class UserResource extends JsonResource
     {
         $slug = array_search($this->job->grants, Job::$grants);
         $name = match ($slug) {
-            'administrator' => 'Администратор',
+            'administrator' => 'Директор',
             'manager' => 'Менеджер',
             default => 'Пользователь',
         };

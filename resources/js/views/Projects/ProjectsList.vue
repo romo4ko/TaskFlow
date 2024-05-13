@@ -10,7 +10,6 @@ const role = ref(auth.userData ? auth.userData.user.grants.slug : null);
 
 function fetchData() {
   axios.get('/api/projects').then((response) => {
-    console.log(response)
     data.value = response.data.data
   })
 }
@@ -19,7 +18,6 @@ fetchData()
 function destroy(id: number) {
   if (confirm('Удалить?')) {
     axios.delete('/api/projects/' + id).then((response) => {
-      console.log(response)
       fetchData()
     })
   }
