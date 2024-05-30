@@ -45,6 +45,11 @@ class Task extends Model
         return $this->belongsTo(Task::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function getStatus()
     {
         return [

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -23,6 +24,9 @@ Route::group(['prefix' => 'api'], function () {
 
         Route::resource('users', UserController::class);
         Route::get('/getUserForm', [UserController::class, 'getFormData']);
+
+        Route::post('/tasks/comment', [CommentController::class, 'store']);
+        Route::get('/comments', [CommentController::class, 'index']);
     });
 });
 

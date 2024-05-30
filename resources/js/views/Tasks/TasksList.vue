@@ -101,7 +101,7 @@ function destroy(id: number) {
               <div>
                 <router-link class="btn btn-info" :to="'/task/'+item.id">Просмотр</router-link>
               </div>
-              <div v-if="role == 'administrator' || role == 'manager'">
+              <div>
                 <router-link class="btn btn-primary" :to="'/task/edit/'+item.id">Изменить</router-link>
               </div>
               <div v-if="role == 'administrator' || role == 'manager'">

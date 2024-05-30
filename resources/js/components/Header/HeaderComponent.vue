@@ -34,18 +34,39 @@ const active = ref('main');
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <router-link to="/" class="nav-link" :class="active == 'main' ? 'active' : ''" aria-current="page" @click="active = 'main'" href="#">Главная</router-link>
+              <router-link
+                  to="/"
+                  class="nav-link"
+                  :class="active == 'main' ? 'active' : ''"
+                  aria-current="page"
+                  @click="active = 'main'"
+                  href="#">
+                Главная</router-link>
             </li>
-            <li class="nav-item">
-              <router-link to="/projects" class="nav-link" :class="active == 'projects' ? 'active' : ''" aria-current="page" @click="active = 'projects'" href="#">Проекты</router-link>
+            <li class="nav-item" v-if="role != null">
+              <router-link
+                  to="/projects"
+                  class="nav-link"
+                  :class="active == 'projects' ? 'active' : ''"
+                  aria-current="page"
+                  @click="active = 'projects'"
+                  href="#">
+                Проекты</router-link>
             </li>
-            <li class="nav-item">
-              <router-link to="/tasks" class="nav-link" :class="active == 'tasks' ? 'active' : ''" aria-current="page" @click="active = 'tasks'" href="#">Задачи</router-link>
+            <li class="nav-item" v-if="role != null">
+              <router-link
+                  to="/tasks"
+                  class="nav-link"
+                  :class="active == 'tasks' ? 'active' : ''"
+                  aria-current="page"
+                  @click="active = 'tasks'"
+                  href="#">
+                Задачи</router-link>
             </li>
             <li class="nav-item" v-if="role == 'administrator'">
               <router-link to="/users" class="nav-link" :class="active == 'users' ? 'active' : ''" aria-current="page" @click="active = 'users'" href="#">Сотрудники</router-link>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" v-if="role != null">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Профиль
               </a>

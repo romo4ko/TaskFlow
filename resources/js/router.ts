@@ -81,7 +81,6 @@ const routes: Array<RouteRecordRaw> = [
     path: '/task/edit/:id',
     meta: {
       requiresAuth: true,
-      forManager: true
     },
     component: () => import('@/views/Tasks/TaskEdit.vue')
   },

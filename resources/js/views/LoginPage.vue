@@ -75,7 +75,7 @@ export default {
           authStore()
             .checkAuth()
             .then(() => {
-              this.$router.push({name: 'HomePage'});
+              location.href = '/';
             })
             .catch(() => {
               alert('An error has occurred');

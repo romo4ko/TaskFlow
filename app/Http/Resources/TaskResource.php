@@ -27,7 +27,7 @@ class TaskResource extends JsonResource
             'type'        => $this->getType(),
             'date_start'  => $this->date_start,
             'date_end'    => $this->date_end,
-            'employees' => $this->getEmployees(),
+            'employees'   => $this->getEmployees(),
         ];
     }
 
