@@ -16,7 +16,7 @@ const auth = authStore();
 const role = ref(auth.userData ? auth.userData.user.grants.slug : null);
 
 const isEmployer = computed(() => {
-  return role.value != 'administrator' || role.value != 'manager';
+  return role.value != 'administrator' && role.value != 'manager';
 })
 
 const form = ref({
